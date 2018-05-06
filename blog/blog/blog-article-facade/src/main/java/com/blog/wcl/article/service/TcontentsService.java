@@ -7,7 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.blog.wcl.article.dto.Pager;
 import com.blog.wcl.article.entity.Tcontents;
 
 /**
@@ -29,5 +31,12 @@ public interface TcontentsService<T, PK extends Serializable> {
 	@RequestMapping(value="findList",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	List<T> findList(@RequestBody Tcontents tcontents);
 
+	/**
+	 * 分页
+	 */
+	@RequestMapping(value="findPageList",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	Pager findPageList(@RequestBody Tcontents tcontents,@RequestParam("pageNumber") Integer pageNumber,@RequestParam("pageSize") Integer pageSize);
+
+    
 
 }

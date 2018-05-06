@@ -39,8 +39,27 @@ public class TcontentsServiceImpl  implements TcontentsService {
 			throw new NullPointerException("entity bean is null");
 		}
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("model", tcontentsMapper);
+		params.put("model", tcontents);
 
 		return tcontentsMapper.getTotalCount(params);
+	}
+	
+	
+	@Override
+	public Pager findPageList(Tcontents tcontents, Integer pageNumber, Integer pageSize) {
+		int total = getTotalCount(tcontents);
+		pageSize = pageSize == null || pageSize <= 0 ? 10 : pageSize;
+		int totalPage = (total + pageSize - 1) / pageSize;
+		pageNumber = pageNumber == null || pageNumber < 1 ? 1 : pageNumber > totalPage ? totalPage : pageNumber;
+		Pager pager = new Pager(pageNumber, pageSize, total);
+	
+		if (total > 0) {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("model", tcontents);
+			params.put("pager", pager);
+			List<Tcontents> list = tcontentsMapper.findPageList(params);
+			pager.setDatas(list); // 数据库集合
+		}
+		return pager;
 	}
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.blog.wcl.article.dto.Pager;
+
 /**
  * TcontentsDao
  */
@@ -26,6 +28,30 @@ public interface TcontentsMapper <T, PK extends Serializable> {
 	 * @return
 	 */
 	public abstract List<T> findList(T obj);
-
 	
+	
+	/**
+	 * 分页
+	 */
+	public abstract List<T> findPageList(Map<String, Object> params);
+
+	/**
+	 * 保存
+	 */
+	public abstract int save(T obj);
+	
+	/**
+	 * 更新
+	 */
+	public abstract int update(T obj);
+
+	/**
+	 * 删除
+	 */
+	public abstract int delete(PK pk);
+	
+	/**
+	 * 按主键查找对象
+	 */
+	public abstract T getById(PK pk);
 }
