@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.blog.wcl.article.mapper.TmetasMapper">
+
+	<resultMap id="RM_Tmetas" type="com.blog.wcl.article.entity.Tmetas">
+        <result property="mid" column="mid"/>
+        <result property="name" column="name"/>
+        <result property="slug" column="slug"/>
+        <result property="type" column="type"/>
+        <result property="description" column="description"/>
+        <result property="sort" column="sort"/>
+        <result property="parent" column="parent"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		mid,name,slug,type,description,sort,parent
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO t_metas (
+	        	mid ,
+	        	name ,
+	        	slug ,
+	        	type ,
+	        	description ,
+	        	sort ,
+	        	parent 
+	        ) VALUES (
+	        	#{mid} ,
+	        	#{name} ,
+	        	#{slug} ,
+	        	#{type} ,
+	        	#{description} ,
+	        	#{sort} ,
+	        	#{parent} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="name != null and name != ''">
+				name = #{name} ,
+			</if>
+			<if test="slug != null and slug != ''">
+				slug = #{slug} ,
+			</if>
+			<if test="type != null and type != ''">
+				type = #{type} ,
+			</if>
+			<if test="description != null and description != ''">
+				description = #{description} ,
+			</if>
+			<if test="sort != null">
+				sort = #{sort} ,
+			</if>
+			<if test="parent != null">
+				parent = #{parent} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE t_metas
+		<include refid="update_sql" />
+		WHERE
+			mid = #{mid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM t_metas 
+        	WHERE  mid = #{mid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_Tmetas">
+		SELECT
+		<include refid="columns" />
+		FROM t_metas
+		WHERE  mid = #{mid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM t_metas
+		<where>
+			<if test="model != null">
+						<if test="model.mid != null">
+							AND mid = #{model.mid}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND name = #{model.name}
+						</if>
+						<if test="model.slug != null and model.slug !=''">
+							AND slug = #{model.slug}
+						</if>
+						<if test="model.type != null and model.type !=''">
+							AND type = #{model.type}
+						</if>
+						<if test="model.description != null and model.description !=''">
+							AND description = #{model.description}
+						</if>
+						<if test="model.sort != null">
+							AND sort = #{model.sort}
+						</if>
+						<if test="model.parent != null">
+							AND parent = #{model.parent}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_Tmetas">
+		SELECT
+		<include refid="columns" />
+		FROM  t_metas
+		<where>
+					<if test="mid != null">
+						AND mid = #{mid}
+					</if>
+					<if test="name != null and name !=''">
+						AND name = #{name}
+					</if>
+					<if test="slug != null and slug !=''">
+						AND slug = #{slug}
+					</if>
+					<if test="type != null and type !=''">
+						AND type = #{type}
+					</if>
+					<if test="description != null and description !=''">
+						AND description = #{description}
+					</if>
+					<if test="sort != null">
+						AND sort = #{sort}
+					</if>
+					<if test="parent != null">
+						AND parent = #{parent}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_Tmetas">
+		SELECT <include refid="columns" />
+		FROM t_metas
+		<where>
+			<if test="model != null">
+						<if test="model.mid != null">
+							AND mid = #{model.mid}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND name = #{model.name}
+						</if>
+						<if test="model.slug != null and model.slug !=''">
+							AND slug = #{model.slug}
+						</if>
+						<if test="model.type != null and model.type !=''">
+							AND type = #{model.type}
+						</if>
+						<if test="model.description != null and model.description !=''">
+							AND description = #{model.description}
+						</if>
+						<if test="model.sort != null">
+							AND sort = #{model.sort}
+						</if>
+						<if test="model.parent != null">
+							AND parent = #{model.parent}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

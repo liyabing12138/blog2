@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.wcl.article.dto.Pager;
@@ -16,13 +17,13 @@ import com.blog.wcl.article.service.TcontentsService;
  * 基本CURD操作在MybatisBaseServiceImpl中实现 否则自行声明接口，实现方法
  */
 @RestController
-public class TcontentsServiceImpl  implements TcontentsService {
+public class TcontentsServiceImpl implements TcontentsService  {
 
+	@SuppressWarnings("rawtypes")
 	@Autowired
 	private TcontentsMapper tcontentsMapper;
-	
 	@Override
-	public List findList(Tcontents tcontents) {
+	public List findList(@RequestBody Tcontents tcontents) {
 		
 		if (null == tcontents) {
 			throw new NullPointerException("entity bean is null");
@@ -32,9 +33,8 @@ public class TcontentsServiceImpl  implements TcontentsService {
 
 		return tcontentsMapper.findList(tcontents);
 	}
-
 	@Override
-	public int getTotalCount(Tcontents tcontents) {
+	public int getTotalCount(@RequestBody Tcontents tcontents) {
 		if (null == tcontents) {
 			throw new NullPointerException("entity bean is null");
 		}
@@ -44,9 +44,8 @@ public class TcontentsServiceImpl  implements TcontentsService {
 		return tcontentsMapper.getTotalCount(params);
 	}
 	
-	
 	@Override
-	public Pager findPageList(Tcontents tcontents, Integer pageNumber, Integer pageSize) {
+	public Pager findPageList(@RequestBody Tcontents tcontents, Integer pageNumber, Integer pageSize) {
 		int total = getTotalCount(tcontents);
 		pageSize = pageSize == null || pageSize <= 0 ? 10 : pageSize;
 		int totalPage = (total + pageSize - 1) / pageSize;
@@ -61,5 +60,24 @@ public class TcontentsServiceImpl  implements TcontentsService {
 			pager.setDatas(list); // 数据库集合
 		}
 		return pager;
+	}
+	@Override
+	public int save(@RequestBody Tcontents tcontents) {
+		if (null == tcontents) {
+			throw new NullPointerException("entity bean is null");
+		}
+
+		return tcontentsMapper.save(tcontents);
+	}
+	@Override
+	public int update(@RequestBody Tcontents tcontents) {
+		if (null == tcontents) {
+			throw new NullPointerException("entity bean is null");
+		}
+		return tcontentsMapper.update(tcontents);
+	}
+	@Override
+	public int delete(Integer cid) {
+		return tcontentsMapper.delete(cid);
 	}
 }

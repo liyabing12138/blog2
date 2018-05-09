@@ -283,6 +283,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 						</if>
 			</if>
 		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
 		limit 
 		<choose>
 			<when test="pager != null">
