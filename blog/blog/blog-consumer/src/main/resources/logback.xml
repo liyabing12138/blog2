@@ -40,7 +40,7 @@
 	<logger name="org.springframework.amqp.rabbit.core.RabbitTemplate" level="INFO"/>
 	<logger name="org.springframework.amqp.rabbit.listener.BlockingQueueConsumer" level="INFO"/>
 	
-	<root level="INFO">
+	<root level="DEBUG">
 		<appender-ref ref="async-stdout" />
 		<appender-ref ref="async-rollingFile" />
 	</root>
