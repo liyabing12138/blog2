@@ -44,6 +44,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <!-- 使用Apache HttpClient替换Feign原生httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+		<dependency>
+		    <groupId>com.netflix.feign</groupId>
+		    <artifactId>feign-httpclient</artifactId>
+		    <version>8.18.0</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
          <dependencies>
