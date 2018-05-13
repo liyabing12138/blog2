@@ -23,13 +23,13 @@
     <div class="clearfix">
         <ul class="pagination m-b-5 pull-right">
             <li th:if="${pageInfo.pageNumber ge 2}">
-                <a th:href="@{page=${pageInfo.pageNumber - 1}}" aria-label="Previous">
+                <a th:href="@{'?page='+${pageInfo.pageNumber -1}}" aria-label="Previous">
                     <i class="fa fa-angle-left"></i>&nbsp;上一页
                 </a>
             </li>
 
             <th:block th:each="nav : ${pageInfo.totalPages}">
-                <li th:class="${nav==pageInfo.pageNumber}?'active':''"><a th:href="@{'?page='+${nav}}" th:text="${nav}"></a>
+                <li th:class="${nav==pageInfo.pageNumber}?'active':''"><a th:href="@{'?page='+${pageInfo.pageNumber}}" th:text="${pageInfo.pageNumber}"></a>
                 </li>
             </th:block>
 

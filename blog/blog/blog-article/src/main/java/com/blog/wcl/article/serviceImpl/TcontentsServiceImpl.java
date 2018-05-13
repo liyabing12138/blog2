@@ -80,4 +80,8 @@ public class TcontentsServiceImpl implements TcontentsService  {
 	public int delete(Integer cid) {
 		return tcontentsMapper.delete(cid);
 	}
+	@Override
+	public Tcontents getById(Integer cid) {
+		return (Tcontents) tcontentsMapper.getById(cid);
+	}
 }

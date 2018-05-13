@@ -69,11 +69,11 @@
                                     <th:block th:if="${null == categories}">
                                         <option value="默认分类" selected="selected">默认分类</option>
                                     </th:block>
-                                    <th:block th:unless="${null == categories}">
+                                    <!-- <th:block th:unless="${null == categories}">
                                         <th:block th:each="c : ${categories}">
                                             <option th:value="${c.name}" th:text="${c.name}"  th:selected="${null !=contents and adminCommons.exist_cat(c, contents.categories)}?true:false" ></option>
                                         </th:block>
-                                    </th:block>
+                                    </th:block> -->
                                 </select>
                             </div>
                             <div class="clearfix"></div>
@@ -108,7 +108,7 @@
                             <div class="clearfix"></div>
 
                             <div class="text-right">
-                                <a class="btn btn-default waves-effect waves-light" th:href="@{/admin/article}">返回列表</a>
+                                <a class="btn btn-default waves-effect waves-light" th:href="@{/admin/article/list}">返回列表</a>
                                 <button type="button" class="btn btn-primary waves-effect waves-light" onclick="subArticle('publish');">
                                     保存文章
                                 </button>
