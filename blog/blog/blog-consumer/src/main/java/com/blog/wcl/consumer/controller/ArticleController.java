@@ -20,6 +20,7 @@ import com.blog.wcl.article.entity.Tcontents;
 import com.blog.wcl.article.entity.Tmetas;
 import com.blog.wcl.consumer.model.RestResponseBo;
 import com.blog.wcl.consumer.service.TcontentsServiceInterface;
+import com.blog.wcl.consumer.service.TcontentsServiceLoadBalancer;
 import com.blog.wcl.consumer.service.TmetasServiceInterface;
 import com.blog.wcl.consumer.util.Types;
 
@@ -28,6 +29,9 @@ import com.blog.wcl.consumer.util.Types;
 public class ArticleController {
 	@Autowired
 	private TcontentsServiceInterface tcontentsServiceInterface;
+	
+//	@Autowired
+//	private TcontentsServiceLoadBalancer  tcontentsServiceInterface;
 	
 	
 	@Autowired
