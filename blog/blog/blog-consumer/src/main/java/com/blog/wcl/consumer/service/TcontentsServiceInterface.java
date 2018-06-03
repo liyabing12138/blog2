@@ -14,7 +14,7 @@ import com.blog.wcl.article.entity.Tcontents;
 import com.blog.wcl.article.service.TcontentsService;
 import com.blog.wcl.consumer.hystrix.TcontentsServiceFallBack;
 
-
+//
 @FeignClient(name = "blog-article",fallback=TcontentsServiceFallBack.class)
 public interface TcontentsServiceInterface {
 	
