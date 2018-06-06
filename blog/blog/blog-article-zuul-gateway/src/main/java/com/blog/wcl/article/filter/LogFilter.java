@@ -17,24 +17,24 @@ public class LogFilter extends ZuulFilter {
 	public Object run() {
 	   RequestContext context = RequestContext.getCurrentContext();
 	   Object originalRequestPath = context.get(FilterConstants.REQUEST_URI_KEY);
-	   String modifiedRequestPath = "/consumer/" + originalRequestPath;
-	   context.put(FilterConstants.REQUEST_URI_KEY, modifiedRequestPath);
+//	   String modifiedRequestPath = "/consumer/" + originalRequestPath;
+//	   context.put(FilterConstants.REQUEST_URI_KEY, modifiedRequestPath);
 		logger.info("--------------pre1-------------------");
 		HttpServletRequest request = context.getRequest();
 		
 		String token = request.getParameter("token");
 		
-		if(token == null){
-			// 权限验证token为空
-			logger.warn("token is null............");
-			context.setSendZuulResponse(false);//代表结束请求，不在继续下级传递。
-			context.setResponseStatusCode(401);
-			context.setResponseBody("{\"result\":\"token is null\"}");
-			context.getResponse().setContentType("text/html;charset=utf-8");
-		}else {
-			logger.info("token is OK............");
-			
-		}
+//		if(token == null){
+//			// 权限验证token为空
+//			logger.warn("token is null............");
+//			context.setSendZuulResponse(false);//代表结束请求，不在继续下级传递。
+//			context.setResponseStatusCode(401);
+//			context.setResponseBody("{\"result\":\"token is null\"}");
+//			context.getResponse().setContentType("text/html;charset=utf-8");
+//		}else {
+//			logger.info("token is OK............");
+//			
+//		}
 		
 		return null;
 	}

@@ -16,7 +16,7 @@ public class BlogFallbackProvider implements ZuulFallbackProvider {
 	@Override
 	public String getRoute() {
 		// 返回为哪个服务进行网关的服务降级处理
-	    return "blog-consumer";
+	    return "blog-article";
 	}
 
 	@Override
