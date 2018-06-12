@@ -90,6 +90,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		FROM t_metas
 		WHERE  mid = #{mid}  
 	</select>
+	
+	<!-- getById -->
+	<select id="getByName" resultMap="RM_Tmetas">
+		SELECT
+		<include refid="columns" />
+		FROM t_metas
+		WHERE  name = #{name}  
+	</select>
 
 	<!-- 获取总数 -->
 	<select id="getTotalCount" resultType="int">

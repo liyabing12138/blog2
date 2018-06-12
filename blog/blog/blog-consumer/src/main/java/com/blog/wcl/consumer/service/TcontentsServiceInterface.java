@@ -21,7 +21,7 @@ public interface TcontentsServiceInterface {
 	/**
 	 * 获取总记录数
 	 */
-	@RequestMapping(value = "/getTotalCount", method = RequestMethod.POST)
+	@RequestMapping(value = "/article-service/getTotalCount", method = RequestMethod.POST)
 	int getTotalCount(Tcontents tcontents);
 
 	/**
@@ -51,14 +51,14 @@ public interface TcontentsServiceInterface {
 	/**
 	 * 删除
 	 */
-	@RequestMapping(value="/article-service/delete",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/article-service/delete",method=RequestMethod.GET)
 	int delete(@RequestParam("cid") Integer cid);
 	
 	
 	/**
 	 * 按主键查找对象
 	 */
-	@RequestMapping(value="/article-service/getById",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/article-service/getById",method=RequestMethod.GET)
 	Tcontents getById(@RequestParam("cid") Integer cid);
 	
 	

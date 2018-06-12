@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.blog.wcl.article.mapper.TrelationshipsMapper">
+
+	<resultMap id="RM_Trelationships" type="com.blog.wcl.article.entity.Trelationships">
+        <result property="cid" column="cid"/>
+        <result property="mid" column="mid"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		cid,mid
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO t_relationships (
+	        	cid ,
+	        	mid 
+	        ) VALUES (
+	        	#{cid} ,
+	        	#{mid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE t_relationships
+		<include refid="update_sql" />
+		WHERE
+			cid = #{cid}  AND
+			mid = #{mid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM t_relationships 
+        	WHERE  cid = #{cid} AND  mid = #{mid}
+    	]]>
+	</delete>
+	
+	<!-- 根据ID删除 -->
+	<delete id="deleteByCid">
+    	<![CDATA[
+        	DELETE FROM t_relationships 
+        	WHERE  cid = #{cid} 
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_Trelationships">
+		SELECT
+		<include refid="columns" />
+		FROM t_relationships
+		WHERE  cid = #{cid}  AND   mid = #{mid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM t_relationships
+		<where>
+			<if test="model != null">
+						<if test="model.cid != null">
+							AND cid = #{model.cid}
+						</if>
+						<if test="model.mid != null">
+							AND mid = #{model.mid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_Trelationships">
+		SELECT
+		<include refid="columns" />
+		FROM  t_relationships
+		<where>
+					<if test="cid != null">
+						AND cid = #{cid}
+					</if>
+					<if test="mid != null">
+						AND mid = #{mid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_Trelationships">
+		SELECT <include refid="columns" />
+		FROM t_relationships
+		<where>
+			<if test="model != null">
+						<if test="model.cid != null">
+							AND cid = #{model.cid}
+						</if>
+						<if test="model.mid != null">
+							AND mid = #{model.mid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

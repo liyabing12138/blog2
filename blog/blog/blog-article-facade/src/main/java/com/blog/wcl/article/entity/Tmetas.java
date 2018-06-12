@@ -47,6 +47,17 @@ public class Tmetas extends BaseEntity {
      * @字段:parent INT UNSIGNED(10)  
      */	
 	private java.lang.Integer parent;
+	
+	private int count;
+	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public Tmetas(){
 	}
 

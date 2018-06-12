@@ -20,7 +20,8 @@ public class TcontentsMapperTest {
 	     @Test
 	     public void findList() throws Exception {
 	         List<Tcontents> tcontents = tcontentsMapper.findList(null);
-	         System.out.println(tcontents.toString());
+	         Tcontents Tcontents2 = (Tcontents) tcontentsMapper.getById(1);
+	         System.out.println(Tcontents2.toString());
 	     }
 	
 }

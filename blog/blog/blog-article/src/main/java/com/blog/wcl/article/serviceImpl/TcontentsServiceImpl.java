@@ -1,5 +1,6 @@
 package com.blog.wcl.article.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.wcl.article.dto.Pager;
 import com.blog.wcl.article.entity.Tcontents;
+import com.blog.wcl.article.entity.Tmetas;
+import com.blog.wcl.article.entity.Trelationships;
 import com.blog.wcl.article.mapper.TcontentsMapper;
+import com.blog.wcl.article.mapper.TmetasMapper;
+import com.blog.wcl.article.mapper.TrelationshipsMapper;
 import com.blog.wcl.article.service.TcontentsService;
 
 /**
@@ -22,6 +27,13 @@ public class TcontentsServiceImpl implements TcontentsService  {
 	@SuppressWarnings("rawtypes")
 	@Autowired
 	private TcontentsMapper tcontentsMapper;
+	
+	@Autowired
+	private TmetasMapper tmetasMapper;
+	
+	@Autowired
+	private TrelationshipsMapper trelationshipsMapper;
+	
 	@Override
 	public List findList(@RequestBody Tcontents tcontents) {
 		
@@ -74,22 +86,50 @@ public class TcontentsServiceImpl implements TcontentsService  {
 		if (null == tcontents) {
 			throw new NullPointerException("entity bean is null");
 		}
-
-		return tcontentsMapper.save(tcontents);
+		int  cid = tcontentsMapper.save(tcontents);
+		String[] categorys = tcontents.getCategories().split(",");
+		List<Tmetas> tmetasList = new ArrayList<Tmetas>();
+		for (String category : categorys) {
+			Tmetas tmetas = (Tmetas) tmetasMapper.getByName(category);
+			tmetasList.add(tmetas);
+		}
+		
+		for (Tmetas tmetas : tmetasList) {
+			Trelationships  trelationships = new Trelationships();		
+			trelationships.setCid(cid);
+			trelationships.setMid(tmetas.getMid());
+			trelationshipsMapper.save(trelationships);
+		}
+		return cid;
 	}
 	@Override
 	public int update(@RequestBody Tcontents tcontents) {
 		if (null == tcontents) {
 			throw new NullPointerException("entity bean is null");
 		}
+		String[] categorys = tcontents.getCategories().split(",");
+		List<Tmetas> tmetasList = new ArrayList<Tmetas>();
+		for (String category : categorys) {
+			Tmetas tmetas = (Tmetas) tmetasMapper.getByName(category);
+			tmetasList.add(tmetas);
+		}
+		trelationshipsMapper.deleteByCid(tcontents.getCid());
+		for (Tmetas tmetas : tmetasList) {
+			Trelationships  trelationships = new Trelationships();		
+			trelationships.setCid(tcontents.getCid());
+			trelationships.setMid(tmetas.getMid());
+			trelationshipsMapper.save(trelationships);
+		}
 		return tcontentsMapper.update(tcontents);
 	}
 	@Override
 	public int delete(Integer cid) {
+		trelationshipsMapper.deleteByCid(cid);
 		return tcontentsMapper.delete(cid);
 	}
 	@Override
-	public Tcontents getById(Integer cid) {
+	public Tcontents getById( Integer cid) {
+		System.out.println("cid="+cid);
 		return (Tcontents) tcontentsMapper.getById(cid);
 	}
 }

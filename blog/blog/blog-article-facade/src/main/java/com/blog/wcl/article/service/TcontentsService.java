@@ -52,7 +52,14 @@ public interface TcontentsService<T, PK extends Serializable> {
 	/**
 	 * 删除
 	 */
-	@RequestMapping(value="delete",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="delete",method=RequestMethod.GET)
 	int delete(@RequestParam("cid") Integer cid);
+	
+	
+	/**
+	 * 按主键查找对象
+	 */
+	@RequestMapping(value="getById",method=RequestMethod.GET)
+	Tcontents getById(@RequestParam("cid") Integer cid);
 
 }

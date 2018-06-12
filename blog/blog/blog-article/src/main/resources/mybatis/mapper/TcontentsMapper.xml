@@ -31,7 +31,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</sql>
 
 	<!--保存 -->
-	<insert id="save">
+	<insert id="save" useGeneratedKeys="true" keyProperty="cid" parameterType="com.blog.wcl.article.entity.Tcontents">
 	    <![CDATA[
 	        INSERT INTO t_contents (
 	        	cid ,

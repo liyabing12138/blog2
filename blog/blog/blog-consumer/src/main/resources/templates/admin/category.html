@@ -23,7 +23,7 @@
                                             <button type="button"
                                                     th:class="'btn btn-'+${adminCommons.rand_color()}+' waves-effect waves-light'">
                                                 <th:block th:text="${c.name}"/>
-                                                <th:block th:text="' ('+${c.count}+')'"/>
+                                                <!-- <th:block th:text="' ('+${c.count}+')'"/> -->
                                             </button>
                                         </th:block>
                                         <th:block th:unless="${c.name == '默认分类'}">
@@ -31,7 +31,7 @@
                                                     th:class="'btn btn-'+${adminCommons.rand_color()}+' dropdown-toggle waves-effect waves-light'"
                                                     data-toggle="dropdown" aria-expanded="false">
                                                 <th:block th:text="${c.name}"/>
-                                                <th:block th:text="' ('+${c.count}+')'"/>
+                                               <!--  <th:block th:text="' ('+${c.count}+')'"/> -->
                                                 <span
                                                         class="caret"></span></button>
                                             <ul class="dropdown-menu" role="menu">
@@ -60,7 +60,7 @@
                                                 th:class="'btn btn-'+${adminCommons.rand_color()}+' dropdown-toggle waves-effect waves-light'"
                                                 data-toggle="dropdown" aria-expanded="false">
                                             <th:block th:text="${c.name}"/>
-                                            <th:block th:text="' ('+${c.count}+')'"/>
+                                           <!--  <th:block th:text="' ('+${c.count}+')'"/> -->
                                             <span
                                                     class="caret"></span></button>
                                         <ul class="dropdown-menu" role="menu">
@@ -100,6 +100,7 @@
     var tale = new $.tale();
 
     $('#save-category-btn').click(function () {
+    	debugger
         var cname = $('#cform #cname').val();
         var mid = $('#cform #mid').val();
         if (cname && cname != '') {

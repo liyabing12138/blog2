@@ -5,19 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.blog.wcl.article.entity.Tmetas;
+import com.blog.wcl.article.entity.Trelationships;
 
-public interface TmetasMapper <T, PK extends Serializable>{
-	
-	/**
-	 * 根据名称查找
-	 * @param name
-	 * @return
-	 */
-	public abstract T getByName(String name); 
+public interface TrelationshipsMapper <T, PK extends Serializable>{
 	/**
 	 * 按主键查找对象
 	 */
-	public abstract T getById(PK pk); 
+	public abstract Trelationships getById(PK pk1,PK pk2); 
 
 	/**
 	 * 获取总记录数
@@ -32,7 +26,7 @@ public interface TmetasMapper <T, PK extends Serializable>{
 	 * @param obj 查询条件的对象
 	 * @return
 	 */
-	public abstract List<Tmetas> findList(Tmetas tmetas);
+	public abstract List<Trelationships> findList(Trelationships trelationships);
 
 	/**
 	 * 分页
@@ -42,20 +36,27 @@ public interface TmetasMapper <T, PK extends Serializable>{
 	 * @param params
 	 * @return
 	 */
-	public abstract List<Tmetas> findPageList(Map<String, Object> params);
+	public abstract List<Trelationships> findPageList(Map<String, Object> params);
 
 	/**
 	 * 保存
 	 */
-	public abstract int save(Tmetas tmetas);
+	public abstract int save(Trelationships trelationships);
 	
 	/**
 	 * 更新
 	 */
-	public abstract int update(Tmetas tmetas);
+	public abstract int update(Trelationships trelationships);
 
 	/**
 	 * 删除
 	 */
-	public abstract int delete(PK pk);
+	public abstract int delete(PK pk1,PK pk2);
+	
+	/**
+	 * 只是根据CID删除
+	 * @param pk
+	 * @return
+	 */
+	public abstract int deleteByCid(PK pk);
 }

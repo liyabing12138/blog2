@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.wcl.article.dto.Pager;
 import com.blog.wcl.article.entity.Tcontents;
 import com.blog.wcl.article.entity.Tmetas;
+import com.blog.wcl.article.mapper.TcontentsMapper;
 import com.blog.wcl.article.mapper.TmetasMapper;
 import com.blog.wcl.article.service.TmetasService;
 
@@ -23,6 +25,8 @@ public class TmetasServiceImpl  implements TmetasService {
 	@Autowired
 	private TmetasMapper tmetasMapper;
 	
+	@Autowired
+	private TcontentsMapper tcontentsMapper;
 	
 	
 	@Override
@@ -65,4 +69,40 @@ public class TmetasServiceImpl  implements TmetasService {
 		return pager;
 	}
 
+	
+	
+	@Override
+	public int saveTmetas(@RequestBody Tmetas tmetas) {
+		if (null == tmetas) {
+			throw new NullPointerException("entity bean is null");
+		}
+		Tmetas tmetas1 = (Tmetas) tmetasMapper.getById(tmetas.getMid());
+		if(tmetas1 == null){
+			return	tmetasMapper.save(tmetas);
+		}
+		
+		return tmetasMapper.update(tmetas);
+	}
+	@Override
+	public int update(@RequestBody Tmetas tmetas) {
+		if (null == tmetas) {
+			throw new NullPointerException("entity bean is null");
+		}
+		return tmetasMapper.update(tmetas);
+	}
+	@Override
+	public int delete(Integer cid) {
+		return tmetasMapper.delete(cid);
+	}
+	@Override
+	public Tmetas getById(Integer cid) {
+		return (Tmetas) tmetasMapper.getById(cid);
+	}
+
+	@Override
+	public Object getByName(String name) {
+		return tmetasMapper.getByName(name);
+	}
+	
+	
 }
