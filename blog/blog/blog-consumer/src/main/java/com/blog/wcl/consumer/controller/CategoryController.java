@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.blog.wcl.article.entity.Tmetas;
+import com.blog.wcl.article.entity.Trelationships;
 import com.blog.wcl.consumer.model.RestResponseBo;
 import com.blog.wcl.consumer.service.TmetasServiceInterface;
+import com.blog.wcl.consumer.service.TrelationshipsServiceInterface;
 import com.blog.wcl.consumer.util.Types;
 
 @Controller
@@ -25,6 +27,9 @@ public class CategoryController {
 	@Autowired
 	private TmetasServiceInterface tmetasServiceInterface;
 	
+	
+	@Autowired
+	private TrelationshipsServiceInterface trelationshipsServiceInterface;
 	
 	/**
      * 分类页
@@ -70,6 +75,10 @@ public class CategoryController {
     @ResponseBody
     public RestResponseBo delete(@RequestParam int mid) {
         try {
+        	Trelationships trelationships = trelationshipsServiceInterface.getByMid(mid);
+        	if(trelationships!= null ){
+        		throw new Exception("删除失败");
+        	}
         	tmetasServiceInterface.delete(mid);
         } catch (Exception e) {
             String msg = "删除失败";

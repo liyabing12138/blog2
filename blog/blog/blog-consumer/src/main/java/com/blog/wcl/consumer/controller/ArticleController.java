@@ -20,7 +20,6 @@ import com.blog.wcl.article.entity.Tcontents;
 import com.blog.wcl.article.entity.Tmetas;
 import com.blog.wcl.consumer.model.RestResponseBo;
 import com.blog.wcl.consumer.service.TcontentsServiceInterface;
-import com.blog.wcl.consumer.service.TcontentsServiceLoadBalancer;
 import com.blog.wcl.consumer.service.TmetasServiceInterface;
 import com.blog.wcl.consumer.util.Types;
 

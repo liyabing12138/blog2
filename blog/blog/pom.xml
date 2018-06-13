@@ -21,6 +21,7 @@
 		<module>blog-server</module>
 		<module>blog-article</module>
 		<module>blog-article-facade</module>
+		<module>blog-consumer</module>
 	</modules>
 	<dependencies>
 		<dependency>

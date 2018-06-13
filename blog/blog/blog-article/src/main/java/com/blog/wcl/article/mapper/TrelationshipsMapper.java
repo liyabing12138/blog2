@@ -12,6 +12,13 @@ public interface TrelationshipsMapper <T, PK extends Serializable>{
 	 * 按主键查找对象
 	 */
 	public abstract Trelationships getById(PK pk1,PK pk2); 
+	
+	/**
+	 * 根据内容ID查找对象
+	 * @param pk1
+	 * @return
+	 */
+	public abstract Trelationships getByMid(PK pk1);
 
 	/**
 	 * 获取总记录数

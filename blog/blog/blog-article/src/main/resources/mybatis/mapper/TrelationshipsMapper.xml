@@ -66,6 +66,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		FROM t_relationships
 		WHERE  cid = #{cid}  AND   mid = #{mid}  
 	</select>
+	
+  <select id="getByMid" resultMap="RM_Trelationships">
+		SELECT
+		<include refid="columns" />
+		FROM t_relationships
+		WHERE  mid = #{mid} 
+	</select>
 
 	<!-- 获取总数 -->
 	<select id="getTotalCount" resultType="int">

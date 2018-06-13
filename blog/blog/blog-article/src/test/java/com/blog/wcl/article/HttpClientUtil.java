@@ -23,8 +23,8 @@ public class HttpClientUtil {
 		// String url="http://127.0.0.1:9031/refresh"; 
 		// String html = HttpClientUtil.doPost(url);
 	    String url= "http://127.0.0.1:9030/encrypt";
-	    String html = HttpClientUtil.doPostJson(url, "root");
-		System.out.println(html);
+//	    String html = HttpClientUtil.doPostJson(url, "root");
+//		System.out.println(html);
 	}
 	
     public static String doGet(String url, Map<String, String> param) {  

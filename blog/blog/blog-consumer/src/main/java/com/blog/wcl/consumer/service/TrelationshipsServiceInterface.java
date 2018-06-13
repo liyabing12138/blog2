@@ -1,8 +1,8 @@
-package com.blog.wcl.article.service;
+package com.blog.wcl.consumer.service;
 
-import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.blog.wcl.article.dto.Pager;
-import com.blog.wcl.article.entity.Tmetas;
 import com.blog.wcl.article.entity.Trelationships;
-@RequestMapping("/article-trelationships-service")
-public interface TrelationshipsService <T, PK extends Serializable>{
+import com.blog.wcl.consumer.hystrix.TmetasServiceFallBack;
 
+@FeignClient(name = "blog-article",fallback=TmetasServiceFallBack.class)
+public interface TrelationshipsServiceInterface  {
+	
+	
 	/**
 	 * 获取总记录数
 	 */
@@ -67,11 +69,11 @@ public interface TrelationshipsService <T, PK extends Serializable>{
 	public abstract int deleteByCid(@RequestParam("cid") Integer cid);
 
 	/**
-	 * 根据内容ID查找对象
+	 * 根据分类ID查找对象
 	 * @param cid
 	 * @return
 	 */
 	@RequestMapping(value="/getByMid",method=RequestMethod.GET)
-	public abstract Trelationships getByMid(@RequestParam("cid") Integer cid);
+	public abstract Trelationships getByMid(@RequestParam("mid") Integer mid);
 	
 }

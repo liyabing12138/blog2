@@ -92,5 +92,11 @@ public class TrelationshipsServiceImpl implements TrelationshipsService<Trelatio
 		// TODO Auto-generated method stub
 		return trelationshipsMapper.deleteByCid(cid);
 	}
+
+	@Override
+	public Trelationships getByMid(Integer cid) {
+		// TODO Auto-generated method stub
+		return trelationshipsMapper.getByMid(cid);
+	}
 	
 }
