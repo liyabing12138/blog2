@@ -1,4 +1,4 @@
-package com.blog.wcl.consumer.util;
+package com.blog.wcl.user.utils;
 
 
 import java.awt.Image;
@@ -19,19 +19,14 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
-import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.blog.wcl.consumer.constant.WebConst;
-import com.blog.wcl.user.entity.Tusers;
 
 /**
  * Tale工具类
@@ -221,31 +216,7 @@ public class TaleUtils {
         return "";
     }
 
-    /**
-     * markdown转换为html
-     *
-     * @param markdown
-     * @return
-     */
-    public static String mdToHtml(String markdown) {
-        if (StringUtils.isBlank(markdown)) {
-            return "";
-        }
-        Node document = parser.parse(markdown);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        String content = renderer.render(document);
-        content = Commons.emoji(content);
 
-        // TODO 支持网易云音乐输出
-//        if (TaleConst.BCONF.getBoolean("app.support_163_music", true) && content.contains("[mp3:")) {
-//            content = content.replaceAll("\\[mp3:(\\d+)\\]", "<iframe frameborder=\"no\" border=\"0\" marginwidth=\"0\" marginheight=\"0\" width=350 height=106 src=\"//music.163.com/outchain/player?type=2&id=$1&auto=0&height=88\"></iframe>");
-//        }
-        // 支持gist代码输出
-//        if (TaleConst.BCONF.getBoolean("app.support_gist", true) && content.contains("https://gist.github.com/")) {
-//            content = content.replaceAll("&lt;script src=\"https://gist.github.com/(\\w+)/(\\w+)\\.js\">&lt;/script>", "<script src=\"https://gist.github.com/$1/$2\\.js\"></script>");
-//        }
-        return content;
-    }
 
    
 
@@ -397,58 +368,6 @@ public class TaleUtils {
     }
     
     
-    /**
-     * 返回当前登录用户
-     *
-     * @return
-     */
-    public static Tusers getLoginUser(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (null == session) {
-            return null;
-        }
-        return (Tusers) session.getAttribute(WebConst.LOGIN_SESSION_KEY);
-    }
-    
-    
-    /**
-     * 获取cookie中的用户id
-     *
-     * @param request
-     * @return
-     */
-    public static Integer getCookieUid(HttpServletRequest request) {
-        if (null != request) {
-            Cookie cookie = cookieRaw(WebConst.USER_IN_COOKIE, request);
-            if (cookie != null && cookie.getValue() != null) {
-                try {
-                    String uid = Tools.deAes(cookie.getValue(), WebConst.AES_SALT);
-                    return StringUtils.isNotBlank(uid) && Tools.isNumber(uid) ? Integer.valueOf(uid) : null;
-                } catch (Exception e) {
-                }
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * 设置记住密码cookie
-     *
-     * @param response
-     * @param uid
-     */
-    public static void setCookie(HttpServletResponse response, Integer uid) {
-        try {
-            String val = Tools.enAes(uid.toString(), WebConst.AES_SALT);
-            boolean isSSL = false;
-            Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, val);
-            cookie.setPath("/");
-            cookie.setMaxAge(60*30);
-            cookie.setSecure(isSSL);
-            response.addCookie(cookie);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
 }

@@ -1,12 +1,10 @@
-package com.blog.wcl.article;
+package com.blog.wcl.user;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * @author wcl http://study.163.com/instructor/1016671292.htm
@@ -14,10 +12,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @EnableDiscoveryClient
 @SpringBootApplication()
-@MapperScan("com.blog.wcl.article.mapper")
-public class ProviderApplication {
+@MapperScan("com.blog.wcl.user.mapper")
+public class UsesrApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProviderApplication.class, args);
+		SpringApplication.run(UsesrApplication.class, args);
 	}
 }

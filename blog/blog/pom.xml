@@ -12,6 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
+	    <version.blog.user.facade>0.0.1-SNAPSHOT</version.blog.user.facade>
 		<version.blog.article.facade>0.0.1-SNAPSHOT</version.blog.article.facade>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
@@ -21,6 +22,8 @@
 		<module>blog-server</module>
 		<module>blog-article</module>
 		<module>blog-article-facade</module>
+		<module>blog-user</module>
+		<module>blog-user-facade</module>
 		<module>blog-consumer</module>
 	</modules>
 	<dependencies>
@@ -68,4 +71,12 @@
             <version>3.2.0</version>
         </dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

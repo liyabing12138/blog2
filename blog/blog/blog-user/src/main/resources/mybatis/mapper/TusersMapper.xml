@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.blog.wcl.user.mapper.TusersMapper">
+
+	<resultMap id="RM_Tusers" type="com.blog.wcl.user.entity.Tusers">
+        <result property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="homeUrl" column="home_url"/>
+        <result property="screenName" column="screen_name"/>
+        <result property="created" column="created"/>
+        <result property="activated" column="activated"/>
+        <result property="logged" column="logged"/>
+        <result property="groupName" column="group_name"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		uid,username,password,email,home_url,screen_name,created,activated,logged,group_name
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO t_users (
+	        	uid ,
+	        	username ,
+	        	password ,
+	        	email ,
+	        	home_url ,
+	        	screen_name ,
+	        	created ,
+	        	activated ,
+	        	logged ,
+	        	group_name 
+	        ) VALUES (
+	        	#{uid} ,
+	        	#{username} ,
+	        	#{password} ,
+	        	#{email} ,
+	        	#{homeUrl} ,
+	        	#{screenName} ,
+	        	#{created} ,
+	        	#{activated} ,
+	        	#{logged} ,
+	        	#{groupName} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="username != null and username != ''">
+				username = #{username} ,
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password} ,
+			</if>
+			<if test="email != null and email != ''">
+				email = #{email} ,
+			</if>
+			<if test="homeUrl != null and homeUrl != ''">
+				home_url = #{homeUrl} ,
+			</if>
+			<if test="screenName != null and screenName != ''">
+				screen_name = #{screenName} ,
+			</if>
+			<if test="created != null">
+				created = #{created} ,
+			</if>
+			<if test="activated != null">
+				activated = #{activated} ,
+			</if>
+			<if test="logged != null">
+				logged = #{logged} ,
+			</if>
+			<if test="groupName != null and groupName != ''">
+				group_name = #{groupName} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE t_users
+		<include refid="update_sql" />
+		WHERE
+			uid = #{uid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM t_users 
+        	WHERE  uid = #{uid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_Tusers">
+		SELECT
+		<include refid="columns" />
+		FROM t_users
+		WHERE  uid = #{uid}  
+	</select>
+	
+	<!-- login -->
+	<select id="login" resultMap="RM_Tusers" >
+		SELECT
+		<include refid="columns" />
+		FROM t_users
+		WHERE  username = #{username} and password = #{password}
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM t_users
+		<where>
+			<if test="model != null">
+						<if test="model.uid != null">
+							AND uid = #{model.uid}
+						</if>
+						<if test="model.username != null and model.username !=''">
+							AND username = #{model.username}
+						</if>
+						<if test="model.password != null and model.password !=''">
+							AND password = #{model.password}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND email = #{model.email}
+						</if>
+						<if test="model.homeUrl != null and model.homeUrl !=''">
+							AND home_url = #{model.homeUrl}
+						</if>
+						<if test="model.screenName != null and model.screenName !=''">
+							AND screen_name = #{model.screenName}
+						</if>
+						<if test="model.created != null">
+							AND created = #{model.created}
+						</if>
+						<if test="model.activated != null">
+							AND activated = #{model.activated}
+						</if>
+						<if test="model.logged != null">
+							AND logged = #{model.logged}
+						</if>
+						<if test="model.groupName != null and model.groupName !=''">
+							AND group_name = #{model.groupName}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_Tusers">
+		SELECT
+		<include refid="columns" />
+		FROM  t_users
+		<where>
+					<if test="uid != null">
+						AND uid = #{uid}
+					</if>
+					<if test="username != null and username !=''">
+						AND username = #{username}
+					</if>
+					<if test="password != null and password !=''">
+						AND password = #{password}
+					</if>
+					<if test="email != null and email !=''">
+						AND email = #{email}
+					</if>
+					<if test="homeUrl != null and homeUrl !=''">
+						AND home_url = #{homeUrl}
+					</if>
+					<if test="screenName != null and screenName !=''">
+						AND screen_name = #{screenName}
+					</if>
+					<if test="created != null">
+						AND created = #{created}
+					</if>
+					<if test="activated != null">
+						AND activated = #{activated}
+					</if>
+					<if test="logged != null">
+						AND logged = #{logged}
+					</if>
+					<if test="groupName != null and groupName !=''">
+						AND group_name = #{groupName}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_Tusers">
+		SELECT <include refid="columns" />
+		FROM t_users
+		<where>
+			<if test="model != null">
+						<if test="model.uid != null">
+							AND uid = #{model.uid}
+						</if>
+						<if test="model.username != null and model.username !=''">
+							AND username = #{model.username}
+						</if>
+						<if test="model.password != null and model.password !=''">
+							AND password = #{model.password}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND email = #{model.email}
+						</if>
+						<if test="model.homeUrl != null and model.homeUrl !=''">
+							AND home_url = #{model.homeUrl}
+						</if>
+						<if test="model.screenName != null and model.screenName !=''">
+							AND screen_name = #{model.screenName}
+						</if>
+						<if test="model.created != null">
+							AND created = #{model.created}
+						</if>
+						<if test="model.activated != null">
+							AND activated = #{model.activated}
+						</if>
+						<if test="model.logged != null">
+							AND logged = #{model.logged}
+						</if>
+						<if test="model.groupName != null and model.groupName !=''">
+							AND group_name = #{model.groupName}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

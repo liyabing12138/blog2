@@ -8,22 +8,17 @@
 		<artifactId>blog</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>blog-consumer</artifactId>
-	<name>blog-consumer</name>
+	<artifactId>blog-user</artifactId>
+	<name>blog-user</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-	     <dependency>
+		 <dependency>
             <groupId>com.blog.wcl</groupId>
             <artifactId>blog-user-facade</artifactId>
             <version>${version.blog.user.facade}</version>
-         </dependency>
-		 <dependency>
-            <groupId>com.blog.wcl</groupId>
-            <artifactId>blog-article-facade</artifactId>
-            <version>${version.blog.article.facade}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -33,45 +28,27 @@
               <groupId>org.springframework.cloud</groupId>
              <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
-       	<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-feign</artifactId>
-		</dependency>
         <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
 	    </dependency>
+        <dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+	     <dependency>
+	        <groupId>mysql</groupId>
+	        <artifactId>mysql-connector-java</artifactId>
+	    </dependency>
 	    <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
-        </dependency>
-        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
-        <!-- 使用Apache HttpClient替换Feign原生httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.3</version>
-        </dependency>
-		<dependency>
-		    <groupId>com.netflix.feign</groupId>
-		    <artifactId>feign-httpclient</artifactId>
-		    <version>8.18.0</version>
-		</dependency>
 	</dependencies>
 	<dependencyManagement>
          <dependencies>
@@ -85,16 +62,19 @@
          </dependencies>
     </dependencyManagement>
 	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-                   <source>1.8</source>
-                   <target>1.8</target>
+   <!-- Package as an executable jar -->
+    <build>
+        <defaultGoal>compile</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                 <configuration>
+                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>  
+                    <fork>true</fork><!-- 如果没有该项配置，可能devtools不会起作用 -->
                 </configuration>
-			</plugin>
-		</plugins>
-	</build>
+            </plugin>
+            
+        </plugins>
+    </build>
 </project>

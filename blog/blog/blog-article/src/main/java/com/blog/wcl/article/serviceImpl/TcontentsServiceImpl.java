@@ -102,6 +102,8 @@ public class TcontentsServiceImpl implements TcontentsService  {
 		}
 		return cid;
 	}
+	
+	
 	@Override
 	public int update(@RequestBody Tcontents tcontents) {
 		if (null == tcontents) {
