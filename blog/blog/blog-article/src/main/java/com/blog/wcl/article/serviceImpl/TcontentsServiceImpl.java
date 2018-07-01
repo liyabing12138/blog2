@@ -19,7 +19,6 @@ import com.blog.wcl.article.mapper.TrelationshipsMapper;
 import com.blog.wcl.article.service.TcontentsService;
 
 /**
- * 基本CURD操作在MybatisBaseServiceImpl中实现 否则自行声明接口，实现方法
  */
 @RestController
 public class TcontentsServiceImpl implements TcontentsService  {
@@ -109,13 +108,22 @@ public class TcontentsServiceImpl implements TcontentsService  {
 		if (null == tcontents) {
 			throw new NullPointerException("entity bean is null");
 		}
+		if(tcontents.getCategories() == null){
+			return tcontentsMapper.update(tcontents);
+		}
 		String[] categorys = tcontents.getCategories().split(",");
+		if(categorys.length == 0){
+			return tcontentsMapper.update(tcontents);
+		}
 		List<Tmetas> tmetasList = new ArrayList<Tmetas>();
 		for (String category : categorys) {
 			Tmetas tmetas = (Tmetas) tmetasMapper.getByName(category);
 			tmetasList.add(tmetas);
 		}
 		trelationshipsMapper.deleteByCid(tcontents.getCid());
+		if(tmetasList == null || tmetasList.size() == 0){
+			return tcontentsMapper.update(tcontents);
+		}
 		for (Tmetas tmetas : tmetasList) {
 			Trelationships  trelationships = new Trelationships();		
 			trelationships.setCid(tcontents.getCid());
@@ -133,5 +141,14 @@ public class TcontentsServiceImpl implements TcontentsService  {
 	public Tcontents getById( Integer cid) {
 		System.out.println("cid="+cid);
 		return (Tcontents) tcontentsMapper.getById(cid);
+	}
+	@Override
+	public int getCountSize(@RequestBody Tcontents tcontents) {
+		return tcontentsMapper.getCountSize(tcontents);
+	}
+	
+	@Override
+	public List findRecentArticle(Integer pageSize) {
+		return tcontentsMapper.findRecentArticle(pageSize);
 	}
 }

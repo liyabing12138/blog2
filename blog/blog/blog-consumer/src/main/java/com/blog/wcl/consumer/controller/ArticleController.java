@@ -21,7 +21,10 @@ import com.blog.wcl.article.entity.Tmetas;
 import com.blog.wcl.consumer.model.RestResponseBo;
 import com.blog.wcl.consumer.service.TcontentsServiceInterface;
 import com.blog.wcl.consumer.service.TmetasServiceInterface;
+import com.blog.wcl.consumer.util.DateKit;
+import com.blog.wcl.consumer.util.TaleUtils;
 import com.blog.wcl.consumer.util.Types;
+import com.blog.wcl.user.entity.Tusers;
 
 @Controller
 @RequestMapping("/admin/article")
@@ -70,9 +73,12 @@ public class ArticleController {
 	@PostMapping(value = "/publish")
 	@ResponseBody
 	public RestResponseBo publishArticle(Tcontents tcontents, HttpServletRequest request) {
-		// UserVo users = this.user(request);
-		// contents.setAuthorId(users.getUid());
+		Tusers users = TaleUtils.getLoginUser(request);
+		tcontents.setAuthorId(users.getUid());
 		tcontents.setType(Types.ARTICLE.getType());
+		 int time = DateKit.getCurrentUnixTime();
+		 tcontents.setCreated(time);
+		 tcontents.setModified(time);
 		if (StringUtils.isBlank(tcontents.getCategories())) {
 			tcontents.setCategories("默认分类");
 		}
@@ -115,8 +121,11 @@ public class ArticleController {
 	@PostMapping(value = "/modify")
 	@ResponseBody
 	public RestResponseBo modifyArticle(Tcontents tcontents, HttpServletRequest request) {
-		tcontents.setAuthorId(2);
+		Tusers users = TaleUtils.getLoginUser(request);
+		tcontents.setAuthorId(users.getUid());
 		tcontents.setType(Types.ARTICLE.getType());
+		int time = DateKit.getCurrentUnixTime();
+		tcontents.setModified(time);
 		try {
 			tcontentsServiceInterface.update(tcontents);
 		} catch (Exception e) {

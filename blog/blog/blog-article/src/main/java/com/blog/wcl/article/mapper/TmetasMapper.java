@@ -35,6 +35,13 @@ public interface TmetasMapper <T, PK extends Serializable>{
 	public abstract List<Tmetas> findList(Tmetas tmetas);
 
 	/**
+	 * 根据条件查询总数
+	 * @param obj
+	 * @return
+	 */
+	public abstract int getCountSize(T obj);
+	
+	/**
 	 * 分页
 	 * 必须传入两个对象：
 	 * 		model - 查询条件的对象<T>  

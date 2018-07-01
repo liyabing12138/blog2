@@ -8,6 +8,7 @@ public enum Types {
     PAGE("page"),
     DRAFT("draft"),
     LINK("link"),
+    COMMENT("comment"),
     IMAGE("image"),
     FILE("file"),
     CSRF_TOKEN("csrf_token"),

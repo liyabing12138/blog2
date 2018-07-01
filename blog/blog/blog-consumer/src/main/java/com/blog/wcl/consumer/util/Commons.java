@@ -53,7 +53,7 @@ public final class Commons {
      * @return
      */
     public static String site_login() {
-        return "admin/login";
+        return "login";
     }
 
     /**
@@ -345,4 +345,19 @@ public final class Commons {
         return map;
     }
 
+    
+    /**
+     * 返回gravatar头像地址
+     *
+     * @param email
+     * @return
+     */
+    public static String gravatar(String email) {
+        String avatarUrl = "https://secure.gravatar.com/avatar";
+        if (StringUtils.isBlank(email)) {
+            return avatarUrl;
+        }
+        String hash = TaleUtils.MD5encode(email.trim().toLowerCase());
+        return avatarUrl + "/" + hash;
+    }
 }

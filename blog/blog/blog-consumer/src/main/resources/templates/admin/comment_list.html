@@ -25,7 +25,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <th:block th:each="comment : ${comments.list}">
+                            <th:block th:each="comment : ${comments.datas}">
                                 <tr th:attr="cid=${comment.coid}">
                                     <td>
                                         <a th:href="@{${commons.site_url('/article/')}+${comment.cid}+'#comments'}"
@@ -77,7 +77,7 @@
             title: '确定删除该评论吗?',
             then: function () {
                 tale.post({
-                    url: '/admin/comments/delete',
+                    url: '/comments/delete',
                     data: {coid: coid},
                     success: function (result) {
                         if (result && result.success) {

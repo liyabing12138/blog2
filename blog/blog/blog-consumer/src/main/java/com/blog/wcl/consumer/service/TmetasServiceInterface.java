@@ -28,6 +28,14 @@ public interface TmetasServiceInterface {
 	List<Tmetas> findList(@RequestBody Tmetas tmetas);
 
 	/**
+	 * 根据条件查询总数
+	 * @param tattach
+	 * @return
+	 */
+	@RequestMapping(value="/article-tmetas-service/getCountSize",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	int getCountSize(@RequestBody Tmetas tmetas);
+	
+	/**
 	 * 分页
 	 */
 	@RequestMapping(value="/article-tmetas-service/findPageList",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)

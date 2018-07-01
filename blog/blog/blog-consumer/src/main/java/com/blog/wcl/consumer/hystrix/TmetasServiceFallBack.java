@@ -64,6 +64,11 @@ public class TmetasServiceFallBack implements TmetasServiceInterface{
 		return tmetas1;
 	}
 
+	@Override
+	public int getCountSize(Tmetas tmetas) {
+		return 0;
+	}
+
 	
 
 }

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.blog.wcl.user.mapper.TattachMapper">
+
+	<resultMap id="RM_Tattach" type="com.blog.wcl.user.entity.Tattach">
+        <result property="id" column="id"/>
+        <result property="fname" column="fname"/>
+        <result property="ftype" column="ftype"/>
+        <result property="fkey" column="fkey"/>
+        <result property="authorId" column="author_id"/>
+        <result property="created" column="created"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		id,fname,ftype,fkey,author_id,created
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO t_attach (
+	        	id ,
+	        	fname ,
+	        	ftype ,
+	        	fkey ,
+	        	author_id ,
+	        	created 
+	        ) VALUES (
+	        	#{id} ,
+	        	#{fname} ,
+	        	#{ftype} ,
+	        	#{fkey} ,
+	        	#{authorId} ,
+	        	#{created} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="fname != null and fname != ''">
+				fname = #{fname} ,
+			</if>
+			<if test="ftype != null and ftype != ''">
+				ftype = #{ftype} ,
+			</if>
+			<if test="fkey != null and fkey != ''">
+				fkey = #{fkey} ,
+			</if>
+			<if test="authorId != null">
+				author_id = #{authorId} ,
+			</if>
+			<if test="created != null">
+				created = #{created} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE t_attach
+		<include refid="update_sql" />
+		WHERE
+			id = #{id} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM t_attach 
+        	WHERE  id = #{id}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_Tattach">
+		SELECT
+		<include refid="columns" />
+		FROM t_attach
+		WHERE  id = #{id}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM t_attach
+		<where>
+			<if test="model != null">
+						<if test="model.id != null">
+							AND id = #{model.id}
+						</if>
+						<if test="model.fname != null and model.fname !=''">
+							AND fname = #{model.fname}
+						</if>
+						<if test="model.ftype != null and model.ftype !=''">
+							AND ftype = #{model.ftype}
+						</if>
+						<if test="model.fkey != null and model.fkey !=''">
+							AND fkey = #{model.fkey}
+						</if>
+						<if test="model.authorId != null">
+							AND author_id = #{model.authorId}
+						</if>
+						<if test="model.created != null">
+							AND created = #{model.created}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件查询总数  -->
+	<select id="getCountSize" resultType="int" >
+		SELECT COUNT(1)
+		FROM t_attach
+		<where>
+					<if test="id != null">
+						AND id = #{id}
+					</if>
+					<if test="fname != null and fname !=''">
+						AND fname = #{fname}
+					</if>
+					<if test="ftype != null and ftype !=''">
+						AND ftype = #{ftype}
+					</if>
+					<if test="fkey != null and fkey !=''">
+						AND fkey = #{fkey}
+					</if>
+					<if test="authorId != null">
+						AND author_id = #{authorId}
+					</if>
+					<if test="created != null">
+						AND created = #{created}
+					</if>
+		</where>
+	</select>
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_Tattach">
+		SELECT
+		<include refid="columns" />
+		FROM  t_attach
+		<where>
+					<if test="id != null">
+						AND id = #{id}
+					</if>
+					<if test="fname != null and fname !=''">
+						AND fname = #{fname}
+					</if>
+					<if test="ftype != null and ftype !=''">
+						AND ftype = #{ftype}
+					</if>
+					<if test="fkey != null and fkey !=''">
+						AND fkey = #{fkey}
+					</if>
+					<if test="authorId != null">
+						AND author_id = #{authorId}
+					</if>
+					<if test="created != null">
+						AND created = #{created}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_Tattach">
+		SELECT <include refid="columns" />
+		FROM t_attach
+		<where>
+			<if test="model != null">
+						<if test="model.id != null">
+							AND id = #{model.id}
+						</if>
+						<if test="model.fname != null and model.fname !=''">
+							AND fname = #{model.fname}
+						</if>
+						<if test="model.ftype != null and model.ftype !=''">
+							AND ftype = #{model.ftype}
+						</if>
+						<if test="model.fkey != null and model.fkey !=''">
+							AND fkey = #{model.fkey}
+						</if>
+						<if test="model.authorId != null">
+							AND author_id = #{model.authorId}
+						</if>
+						<if test="model.created != null">
+							AND created = #{model.created}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

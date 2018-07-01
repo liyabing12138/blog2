@@ -31,6 +31,22 @@ public interface TcontentsServiceInterface {
 	List<Tcontents> findList(@RequestBody Tcontents tcontents);
 
 	/**
+	 * 查找最近的文章数量
+	 * @param pageSize
+	 * @return
+	 */
+	@RequestMapping(value="/article-service/findRecentArticle",method=RequestMethod.GET)
+	List<Tcontents>  findRecentArticle(@RequestParam("pageSize") Integer pageSize);
+	
+	/**
+	 * 根据条件查询总数
+	 * @param tattach
+	 * @return
+	 */
+	@RequestMapping(value="/article-service/getCountSize",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	int getCountSize(@RequestBody Tcontents tcontents);
+	
+	/**
 	 * 分页
 	 */
 	@RequestMapping(value="/article-service/findPageList",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)

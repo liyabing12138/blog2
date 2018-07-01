@@ -185,6 +185,54 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>  
 	
+	
+	<!-- 按条件组合查询总数  -->
+	<select id="getCountSize" resultType="int" >
+		SELECT COUNT(1)
+		FROM t_contents
+		<where>
+					<if test="cid != null">
+						AND cid = #{cid}
+					</if>
+					<if test="title != null and title !=''">
+						AND title = #{title}
+					</if>
+					<if test="slug != null and slug !=''">
+						AND slug = #{slug}
+					</if>
+					<if test="created != null">
+						AND created = #{created}
+					</if>
+					<if test="modified != null">
+						AND modified = #{modified}
+					</if>
+					<if test="content != null and content !=''">
+						AND content = #{content}
+					</if>
+					<if test="authorId != null">
+						AND author_id = #{authorId}
+					</if>
+					<if test="type != null and type !=''">
+						AND type = #{type}
+					</if>
+					<if test="status != null and status !=''">
+						AND status = #{status}
+					</if>
+					<if test="tags != null and tags !=''">
+						AND tags = #{tags}
+					</if>
+					<if test="categories != null and categories !=''">
+						AND categories = #{categories}
+					</if>
+					<if test="hits != null">
+						AND hits = #{hits}
+					</if>
+					<if test="commentsNum != null">
+						AND comments_num = #{commentsNum}
+					</if>
+		</where>
+	</select>
+	
 	<!-- 按条件组合搜索列表  -->
 	<select id="findList" resultMap="RM_Tcontents">
 		SELECT
@@ -296,5 +344,24 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			</otherwise>
 		</choose>
 	</select>
+	
+	
+	<!-- 分页 -->
+	<select id="findRecentArticle" resultMap="RM_Tcontents">
+		SELECT <include refid="columns" />
+		FROM t_contents
+		ORDER BY created desc
+		limit 
+		<choose>
+			<when test="_parameter != null">
+				0,#{_parameter}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+	
+	
 
 </mapper>

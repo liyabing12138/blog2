@@ -1,4 +1,4 @@
-package com.blog.wcl.article.service;
+package com.blog.wcl.user.service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,28 +9,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.blog.wcl.article.dto.Pager;
-import com.blog.wcl.article.entity.Tcontents;
-import com.blog.wcl.article.entity.Tmetas;
-
+import com.blog.wcl.user.dto.Pager;
+import com.blog.wcl.user.entity.Tattach;
+import com.blog.wcl.user.entity.Tcomments;
 
 /**
- * TmetasService接口
+ * TcommentsService接口
  */
-@RequestMapping("/article-tmetas-service")
-public interface TmetasService<T, PK extends Serializable>{
+@RequestMapping("/tcomments-service")
+public interface TcommentsService <T, PK extends Serializable> {
 	/**
 	 * 获取总记录数
 	 */
 	@RequestMapping(value = "/getTotalCount", method = RequestMethod.POST)
-	int getTotalCount(Tmetas tmetas);
+	int getTotalCount(Tcomments tcomments);
 
 	/**
 	 * 按实体对象属性动态查找列表
 	 */
 	@RequestMapping(value="/findList",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	List<T> findList(@RequestBody Tmetas tmetas);
+	List<Tcomments> findList(@RequestBody Tcomments tcomments);
 
+	/**
+	 * 查询最新的评论
+	 * @param pageSize
+	 * @return
+	 */
+	@RequestMapping(value="/findRecentComment",method=RequestMethod.GET)
+	List<Tcomments> findRecentComment(@RequestParam("pageSize") Integer pageSize);
 	
 	/**
 	 * 根据条件查询总数
@@ -38,45 +44,36 @@ public interface TmetasService<T, PK extends Serializable>{
 	 * @return
 	 */
 	@RequestMapping(value="/getCountSize",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	int getCountSize(@RequestBody Tmetas tmetas);
+	int getCountSize(@RequestBody Tcomments tcomments);
 	
 	/**
 	 * 分页
 	 */
 	@RequestMapping(value="/findPageList",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	Pager findPageList(@RequestBody Tmetas tmetas,@RequestParam("pageNumber") Integer pageNumber,@RequestParam("pageSize") Integer pageSize);
-	
+	Pager findPageList(@RequestBody Tcomments tcomments,@RequestParam("pageNumber") Integer pageNumber,@RequestParam("pageSize") Integer pageSize);
+
 	/**
 	 * 保存
 	 */
 	@RequestMapping(value="/save",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	int saveTmetas(@RequestBody Tmetas tmetas);
+	int save(@RequestBody Tcomments tcomments);
 
 	/**
 	 * 更新
 	 */
 	@RequestMapping(value="/update",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	int update(@RequestBody Tmetas tmetas);
+	int update(@RequestBody Tcomments tcomments);
 
 	/**
 	 * 删除
 	 */
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
-	int delete(@RequestParam("cid") Integer cid);
+	int delete(@RequestParam("coid") Integer coid);
 	
 	
 	/**
 	 * 按主键查找对象
 	 */
 	@RequestMapping(value="/getById",method=RequestMethod.GET)
-	Tmetas getById(@RequestParam("cid") Integer cid);
-	
-	
-	/**
-	 * 根据名称查找
-	 * @param name
-	 * @return
-	 */
-	@RequestMapping(value="/getByName",method=RequestMethod.GET)
-	public abstract T getByName(String name); 
+	Tcomments getById(@RequestParam("coid") Integer coid);
 }

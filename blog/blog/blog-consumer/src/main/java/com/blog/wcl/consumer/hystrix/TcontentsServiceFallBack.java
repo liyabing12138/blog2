@@ -62,4 +62,16 @@ public class TcontentsServiceFallBack implements TcontentsServiceInterface{
 		return tcontents1;
 	}
 
+	@Override
+	public int getCountSize(Tcontents tcontents) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Tcontents> findRecentArticle(Integer pageSize) {
+		List<Tcontents> list = new ArrayList<>();
+		return list;
+	}
+
 }

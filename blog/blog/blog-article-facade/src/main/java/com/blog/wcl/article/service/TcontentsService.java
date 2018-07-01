@@ -30,6 +30,22 @@ public interface TcontentsService<T, PK extends Serializable> {
 	 */
 	@RequestMapping(value="findList",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	List<T> findList(@RequestBody Tcontents tcontents);
+	
+	/**
+	 * 查找最近的文章数量
+	 * @param pageSize
+	 * @return
+	 */
+	@RequestMapping(value="/findRecentArticle",method=RequestMethod.GET)
+	List<T>  findRecentArticle(@RequestParam("pageSize") Integer pageSize);
+	
+	/**
+	 * 根据条件查询总数
+	 * @param tattach
+	 * @return
+	 */
+	@RequestMapping(value="/getCountSize",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	int getCountSize(@RequestBody Tcontents tcontents);
 
 	/**
 	 * 分页

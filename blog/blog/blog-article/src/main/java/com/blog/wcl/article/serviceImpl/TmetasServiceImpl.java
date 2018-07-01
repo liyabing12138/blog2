@@ -103,6 +103,11 @@ public class TmetasServiceImpl  implements TmetasService {
 	public Object getByName(String name) {
 		return tmetasMapper.getByName(name);
 	}
+
+	@Override
+	public int getCountSize(@RequestBody Tmetas tmetas) {
+		return tmetasMapper.getCountSize(tmetas);
+	}
 	
 	
 }

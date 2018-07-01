@@ -1,18 +1,14 @@
-package com.blog.wcl.article.mapper;
+package com.blog.wcl.user.mapper;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.blog.wcl.article.entity.Tcontents;
 
 /**
- * TcontentsDao
+ * TattachDao
  */
-public interface TcontentsMapper <T, PK extends Serializable> {
-
-	
-
+public interface TattachMapper <T, PK extends Serializable> {
 
 	/**
 	 * 获取总记录数
@@ -42,13 +38,6 @@ public interface TcontentsMapper <T, PK extends Serializable> {
 	 * 分页
 	 */
 	public abstract List<T> findPageList(Map<String, Object> params);
-	
-	/**
-	 * 查询最近的文章数量
-	 * @param params
-	 * @return
-	 */
-	public abstract List<T> findRecentArticle(PK pk);
 
 	/**
 	 * 保存
@@ -68,5 +57,5 @@ public interface TcontentsMapper <T, PK extends Serializable> {
 	/**
 	 * 按主键查找对象
 	 */
-	public abstract T getById(PK pk);
+	public abstract T getById(PK pk); 
 }

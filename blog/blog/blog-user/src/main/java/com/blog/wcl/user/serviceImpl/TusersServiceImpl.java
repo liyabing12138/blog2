@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.wcl.user.dto.Pager;
 import com.blog.wcl.user.entity.Tusers;
@@ -18,11 +19,12 @@ import com.blog.wcl.user.utils.TaleUtils;
 /**
  * 基本CURD操作在MybatisBaseServiceImpl中实现 否则自行声明接口，实现方法
  */
-@Service
+@RestController
 public class TusersServiceImpl  implements TusersService {
 
 	@Autowired
 	private TusersMapper tusersMapper;
+	
 	
 	
 	@Override
@@ -103,7 +105,7 @@ public class TusersServiceImpl  implements TusersService {
 		 String pwd = TaleUtils.MD5encode(username+password);
 		   Map<String, Object> params = new HashMap<String, Object>();
 			params.put("username", username);
-			params.put("password", password);
+			params.put("password", pwd);
 		 return (Tusers) tusersMapper.login(params);
 	}
 

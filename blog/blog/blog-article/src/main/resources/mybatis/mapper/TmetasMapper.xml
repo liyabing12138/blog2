@@ -130,6 +130,36 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>  
 	
+	<!-- 按条件组合查询总数  -->
+	<select id="getCountSize" resultType="int" >
+		SELECT COUNT(1)
+		FROM t_metas
+		<where>
+					<if test="mid != null">
+						AND mid = #{mid}
+					</if>
+					<if test="name != null and name !=''">
+						AND name = #{name}
+					</if>
+					<if test="slug != null and slug !=''">
+						AND slug = #{slug}
+					</if>
+					<if test="type != null and type !=''">
+						AND type = #{type}
+					</if>
+					<if test="description != null and description !=''">
+						AND description = #{description}
+					</if>
+					<if test="sort != null">
+						AND sort = #{sort}
+					</if>
+					<if test="parent != null">
+						AND parent = #{parent}
+					</if>
+		</where>
+	</select>
+	
+	
 	<!-- 按条件组合搜索列表  -->
 	<select id="findList" resultMap="RM_Tmetas">
 		SELECT
